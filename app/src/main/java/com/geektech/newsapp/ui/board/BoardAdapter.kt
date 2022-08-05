@@ -18,7 +18,7 @@ class BoardAdapter(val context: Context, val navController: NavController) : Rec
     private val list = arrayListOf(
         "СВЕЖИЕ",
         "МОШНЫЕ",
-        "НЕПОВТОРИМЫЕ"
+        "НОРМ ТАКИЕ"
     )
 
    inner class BoardViewHolder(private var binding: ItemBoardBinding) : RecyclerView.ViewHolder(binding.root) {

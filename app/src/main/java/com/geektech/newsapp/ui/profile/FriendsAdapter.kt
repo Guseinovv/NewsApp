@@ -12,7 +12,7 @@ class FriendsAdapter(val context: Context, val navController: NavController) :
     RecyclerView.Adapter<FriendsAdapter.FriendViewHolder>() {
     private val imageView = arrayListOf(
 
-        R.drawable.ava_four,
+        R.color.gray,
         R.drawable.ava_two,
         R.drawable.ava_three,
         R.drawable.ava_four,

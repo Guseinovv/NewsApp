@@ -30,10 +30,8 @@ class NewsFragment : Fragment() {
 
     private fun save() {
         val text = binding.editText.text.toString()
-        val bundle = Bundle()
-        val news = News(text, System.currentTimeMillis())
-        bundle.putSerializable("news", news)
-        parentFragmentManager.setFragmentResult("rk_news", bundle)
+        val news = News(0,text, System.currentTimeMillis())
+        App.db.dao().insert(news)
         findNavController().navigateUp()
 
 
