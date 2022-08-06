@@ -2,31 +2,34 @@ package com.geektech.newsapp.ui.board
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import com.geektech.newsapp.Prefs
 import com.geektech.newsapp.databinding.ItemBoardBinding
 import com.geektech.newsapp.R
+import com.geektech.newsapp.models.Board
 
 class BoardAdapter(val context: Context, val navController: NavController) : RecyclerView.Adapter<BoardAdapter.BoardViewHolder>() {
- private val text = arrayListOf(
-     "Читайте новости самым первым и будьте в курсе новых событий",
-     "Добавляйте свою новость, чтобы проинформировать остальных",
-     "Новость распространяется по серверу среди всех пользователей"
+ private val list = arrayListOf<Board>(
  )
-    private val ImageView= arrayListOf(R.raw.lotti_news1,R.raw.lotti_news3,R.raw.lotti_news2)
-    private val list = arrayListOf(
-        "СВЕЖИЕ",
-        "МОШНЫЕ",
-        "НОРМ ТАКИЕ"
-    )
 
    inner class BoardViewHolder(private var binding: ItemBoardBinding) : RecyclerView.ViewHolder(binding.root) {
-       fun bind(position: Int) {
-           binding.tvTitle.text = list[position]
-           binding.tvText.text = text[position]
-           binding.imageView.setAnimation(ImageView[position])
-
+       fun bind(board: Board) {
+           binding.tvTitle.text = board.title
+           binding.tvText.text = board.description
+           binding.imageView.setAnimation(board.lottie)
+           if (list.lastIndexOf(board) == list.lastIndex) {
+               binding.btnStart.visibility = View.VISIBLE
+           } else {
+               binding.btnStart.visibility = View.INVISIBLE
+           }
+           binding.btnStart.setOnClickListener {
+               Prefs(context).saveState()
+               navController.navigateUp()
+           }
        }
 
    }
@@ -36,10 +39,11 @@ class BoardAdapter(val context: Context, val navController: NavController) : Rec
     }
 
     override fun onBindViewHolder(holder: BoardViewHolder, position: Int) {
-       holder.bind(position)
+       holder.bind(list[position])
     }
 
-    override fun getItemCount() = 3
-
-
+    override fun getItemCount() = list.size
+    fun addItem(board: Board) {
+        list.add(board)
+    }
 }
